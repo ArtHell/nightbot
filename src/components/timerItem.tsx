@@ -1,19 +1,24 @@
+import { Button } from "@mui/material";
+import { useDrag } from "react-dnd";
 import { NightbotTimer } from "../models/timer";
+import { TimerDropResult } from "../models/timerDropResult";
 
 interface Props {
   timer: NightbotTimer;
 }
 
 const TimerItem = ({ timer }: Props) => {
+  const [{ }, drag] = useDrag(() => ({
+    type: 'timer',
+    item: { _id: timer._id, name: timer.name } as TimerDropResult,
+    collect: (monitor) => ({
+      handlerId: monitor.getHandlerId(),
+    }),
+  }))
+
   return (
-    <div>
-      <div>{timer._id}</div>
-      <div>{timer.enabled}</div>
-      <div>{timer.interval}</div>
-      <div>{timer.lines}</div>
-      <div>{timer.message}</div>
-      <div>{timer.name}</div>
-      <div>{(new Date(timer.createdAt)).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}</div>
+    <div ref={drag}>
+      <Button variant="outlined" sx={{minWidth: '128px'}}>{timer.name}</Button>
     </div>
 
   );

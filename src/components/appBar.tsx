@@ -1,10 +1,30 @@
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { Box, AppBar as AppBarMui, Toolbar, IconButton, Typography, Button, Link } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAuthLink } from "../helpers/authHelper";
+import { revokeToken } from "../repositories/nightbot";
 
 const AppBar = () => {
+  const navigate = useNavigate();
   const redirectUrl = window.location.origin + '/callback';
   const authLink = getAuthLink(redirectUrl);
+  const [accessToken, setAccessToken] = useState<string>();
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if(token) {
+      setAccessToken(token);
+    }
+  }, []);
+
+  const logout = async () => {
+    if(accessToken){
+      await revokeToken(accessToken);
+      setAccessToken(undefined);
+      navigate('/logout', {replace: true});
+    }
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -24,7 +44,8 @@ const AppBar = () => {
               {'Nightbot Enhanced UI'}
             </Link>
           </Typography>
-          <Button href={authLink} color="inherit">{'Login'}</Button>
+          {accessToken ? <Button onClick={logout} color="inherit">{'Выйти'}</Button> : <Button href={authLink} color="inherit">{'Войти'}</Button>}
+          
         </Toolbar>
       </AppBarMui>
     </Box>
