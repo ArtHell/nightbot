@@ -42,7 +42,7 @@ const Timers = () => {
     return timeSlots;
   }
 
-  const saveTimers = () => {
+  const saveTimers = async () => {
     const savedTimers: any = {};
     for(var i = 0; i < 60; i++) {
       const savedTimer = localStorage.getItem(`timer_id_${i}`);
@@ -50,13 +50,16 @@ const Timers = () => {
         savedTimers[savedTimer] = savedTimers[savedTimer] ? `${savedTimers[savedTimer]},${i}` : i.toString();
       }
     }
+    const promises: Promise<any>[] = [];
     timers.timers.map((timer: NightbotTimer) => {
       const timerMinutes = savedTimers[timer._id];
       if(timerMinutes && accessToken) {
         timer.interval = `${timerMinutes} * * * *`;
-        saveTimer(timer, accessToken);
+        promises.push(saveTimer(timer, accessToken));
       }
     });
+    await Promise.all(promises);
+    alert('Изменения сохранены успешно');
   }
 
   const renderTimers = (timers: NightbotTimer[]) => {

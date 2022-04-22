@@ -26,9 +26,8 @@ const App = () => {
       <AppBar />
       <Container sx={{paddingTop: '40px'}}>
         <Routes>
-          <Route path="/" element={<Navigate replace to="/timers" />} />
+          <Route path="/" element={<AuthHandler />} />
           <Route path="/timers" element={<Timers />} />
-          <Route path="/callback" element={<AuthHandler />} />
           <Route path="/logout" element={<Logout />} />
         </Routes>
       </Container>

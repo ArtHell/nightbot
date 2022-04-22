@@ -16,7 +16,7 @@ const isMobile = isMobileJS(window.navigator).any;
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/nightbot'>
       {isMobile ?
         <DndProvider backend={TouchBackend}>
           <App />

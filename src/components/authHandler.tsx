@@ -1,13 +1,17 @@
-import { Box, Button, Link } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const AuthHandler = () => {
   const location = useLocation();
   const [accessToken, setAccessToken] = useState<string>('');
 
   useEffect(() => {
-    if (location) {
+    const token = localStorage.getItem("access_token");
+    if(token) {
+      setAccessToken(token);
+    }
+    if (location && location.hash) {
       const searchParams = new URLSearchParams(location.hash.replace('#', ''));
       const accessToken = searchParams.get("access_token");
       if(accessToken) {
@@ -17,18 +21,11 @@ const AuthHandler = () => {
     }
   }, [location])
 
-  return (
-    Boolean(accessToken) ?
-    (<div>
-      <span>{"Вы успешно авторизировались. Теперь вы можете использовать функциональность, расширяющую возможности официального сайта "}</span>
-      <Link href='https://nightbot.tv/'>{'Nightbot'}</Link>
-      <Box sx={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
-        <Button href='/' color="inherit" variant="outlined">{'Перейти на главную'}</Button>
-      </Box>
-      
-    </div>) :
-    <div>{'Завершаем авторизацию...'}</div>
-  );
+  const renderMissingAccessToken = () => {
+    return <Typography variant="body1">{'Вы должны войти в приложение.'}</Typography>;
+  }
+
+  return (Boolean(accessToken) ? <Navigate replace to="/timers" /> : renderMissingAccessToken())
 }
 
 export default AuthHandler;

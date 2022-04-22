@@ -7,7 +7,7 @@ import { revokeToken } from "../repositories/nightbot";
 
 const AppBar = () => {
   const navigate = useNavigate();
-  const redirectUrl = window.location.origin + '/callback';
+  const redirectUrl = window.location.href.split(window.location.origin)[1].includes('nightbot') ? window.location.origin + '/nightbot' : window.location.origin;
   const authLink = getAuthLink(redirectUrl);
   const [accessToken, setAccessToken] = useState<string>();
 
@@ -40,7 +40,7 @@ const AppBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="/" sx={{ textDecoration: 'none', boxShadow: 'none', color: 'inherit' }}>
+            <Link href="/nightbot" sx={{ textDecoration: 'none', boxShadow: 'none', color: 'inherit' }}>
               {'Nightbot Enhanced UI'}
             </Link>
           </Typography>
