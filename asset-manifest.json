@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/nightbot/static/css/main.e6c13ad2.css",
-    "main.js": "/nightbot/static/js/main.7f062630.js",
+    "main.js": "/nightbot/static/js/main.f78ff97e.js",
     "index.html": "/nightbot/index.html",
     "main.e6c13ad2.css.map": "/nightbot/static/css/main.e6c13ad2.css.map",
-    "main.7f062630.js.map": "/nightbot/static/js/main.7f062630.js.map"
+    "main.f78ff97e.js.map": "/nightbot/static/js/main.f78ff97e.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.7f062630.js"
+    "static/js/main.f78ff97e.js"
   ]
 }
