@@ -1,5 +1,5 @@
 export const getAuthLink = (redirectUrl: string): string => {
-  const clientId = "0fcf24b083e1c819da1c04af82dea353";
+  const clientId = "d1ee4d13ad3403d3a37bc0eec3918f8a";
   const responseType = "token";
   const scope = "timers";
 
